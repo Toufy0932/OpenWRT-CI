@@ -1,0 +1,80 @@
+#设备平台
+CONFIG_TARGET_qualcommax=y
+CONFIG_TARGET_qualcommax_ipq60xx=y
+#设备列表（仅兆能M2）
+CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_zn_m2=y
+#WIFI驱动（关闭，M2 不需要无线）
+CONFIG_PACKAGE_kmod-ath=n
+CONFIG_PACKAGE_kmod-ath11k=n
+CONFIG_PACKAGE_kmod-ath11k-ahb=n
+CONFIG_PACKAGE_kmod-ath11k-pci=n
+CONFIG_PACKAGE_ath11k-firmware-ipq6018=n
+CONFIG_PACKAGE_ath11k-firmware-ipq6018-ddwrt=n
+CONFIG_PACKAGE_ath11k-firmware-qcn9074=n
+CONFIG_PACKAGE_ath11k-firmware-qcn9074-ddwrt=n
+#M2 专属精简（覆盖 GENERAL，因 WRT-CORE 已改为 config 后写入）
+#--- 无 SATA / NVMe / 音频 / 链路聚合 / MPTCP / OpenVPN 增强 ---
+CONFIG_PACKAGE_kmod-ata-ahci=n
+CONFIG_PACKAGE_kmod-ata-core=n
+CONFIG_PACKAGE_kmod-bonding=n
+CONFIG_PACKAGE_kmod-dummy=n
+CONFIG_PACKAGE_kmod-inet-mptcp-diag=n
+CONFIG_PACKAGE_kmod-nvme=n
+CONFIG_PACKAGE_kmod-ovpn-backports=n
+CONFIG_PACKAGE_kmod-sound-core=n
+CONFIG_PACKAGE_kmod-veth=n
+#--- 无 USB 接口（原版无 USB） ---
+CONFIG_PACKAGE_kmod-usb3=n
+CONFIG_PACKAGE_kmod-usb-audio=n
+CONFIG_PACKAGE_kmod-usb-core=n
+CONFIG_PACKAGE_kmod-usb-dwc3=n
+CONFIG_PACKAGE_kmod-usb-net=n
+CONFIG_PACKAGE_kmod-usb-net-asix=n
+CONFIG_PACKAGE_kmod-usb-net-asix-ax88179=n
+CONFIG_PACKAGE_kmod-usb-net-cdc-eem=n
+CONFIG_PACKAGE_kmod-usb-net-cdc-ether=n
+CONFIG_PACKAGE_kmod-usb-net-cdc-mbim=n
+CONFIG_PACKAGE_kmod-usb-net-cdc-ncm=n
+CONFIG_PACKAGE_kmod-usb-net-cdc-subset=n
+CONFIG_PACKAGE_kmod-usb-net-huawei-cdc-ncm=n
+CONFIG_PACKAGE_kmod-usb-net-ipheth=n
+CONFIG_PACKAGE_kmod-usb-net-qmi-wwan=n
+CONFIG_PACKAGE_kmod-usb-net-qmi-wwan-fibocom=n
+CONFIG_PACKAGE_kmod-usb-net-qmi-wwan-quectel=n
+CONFIG_PACKAGE_kmod-usb-net-rndis=n
+CONFIG_PACKAGE_kmod-usb-net-rtl8150=n
+CONFIG_PACKAGE_kmod-usb-net-rtl8152=n
+CONFIG_PACKAGE_kmod-usb-net-sierrawireless=n
+CONFIG_PACKAGE_kmod-usb-ohci=n
+CONFIG_PACKAGE_kmod-usb-storage=n
+CONFIG_PACKAGE_kmod-usb-storage-extras=n
+CONFIG_PACKAGE_kmod-usb-storage-uas=n
+CONFIG_PACKAGE_kmod-usb-uhci=n
+CONFIG_PACKAGE_kmod-usb-xhci=n
+#--- 无文件系统存储需求 ---
+CONFIG_PACKAGE_kmod-fs-btrfs=n
+CONFIG_PACKAGE_kmod-fs-ksmbd=n
+CONFIG_PACKAGE_kmod-fuse=n
+#--- M2 不需要的插件（覆盖 GENERAL 的 =y） ---
+CONFIG_PACKAGE_luci-app-samba4=n
+CONFIG_PACKAGE_luci-app-mini-diskmanager=n
+#--- 无 USB / 无磁盘工具 ---
+CONFIG_PACKAGE_automount=n
+CONFIG_PACKAGE_cfdisk=n
+CONFIG_PACKAGE_cgdisk=n
+CONFIG_PACKAGE_exfat-fsck=n
+CONFIG_PACKAGE_exfat-mkfs=n
+CONFIG_PACKAGE_fdisk=n
+CONFIG_PACKAGE_gdisk=n
+CONFIG_PACKAGE_libimobiledevice=n
+CONFIG_PACKAGE_libnvme=n
+CONFIG_PACKAGE_mmc-utils=n
+CONFIG_PACKAGE_nvme-cli=n
+CONFIG_PACKAGE_proto-bonding=n
+CONFIG_PACKAGE_sfdisk=n
+CONFIG_PACKAGE_sgdisk=n
+CONFIG_PACKAGE_smartmontools=n
+CONFIG_PACKAGE_smartmontools-drivedb=n
+CONFIG_PACKAGE_usb-modeswitch=n
+CONFIG_PACKAGE_usbmuxd=n
+CONFIG_PACKAGE_usbutils=n
