@@ -9,7 +9,7 @@ sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/coll
 #修改immortalwrt.lan关联IP
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 #添加编译日期标识
-sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_MARK-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+sed -i "s/(\(luciversion || ''\))/\(\1) + (' \/ $WRT_MARK-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 
 WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh" 2>/dev/null)
 WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
@@ -69,4 +69,18 @@ if [[ "${WRT_TARGET^^}" == *"AIROHA"* ]]; then
 		target/linux/airoha/an7581/base-files/etc/board.d/02_network
 	sed -i 's/interrupts.*//g' target/linux/airoha/dts/an7581-nokia_xg-040g-md-common.dtsi
 	echo "airoha set up network order successfully!"
+fi
+
+# ---- Patch: ensure clashoo is disabled for ZN_M2-WIFI-NO (prevent injected package from being built) ----
+# If the selected config is the ZN_M2 no-wifi profile, force CONFIG_PACKAGE_* for clashoo to 'n'
+# and remove any injected clashoo package directories to avoid dependency auto-selection.
+if [[ "${WRT_CONFIG,,}" == *"zn_m2"* && "${WRT_CONFIG,,}" == *"wifi"* && "${WRT_CONFIG,,}" == *"no"* ]]; then
+	echo "Forcing clashoo packages disabled for $WRT_CONFIG"
+	echo "CONFIG_PACKAGE_clashoo=n" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-clashoo=n" >> ./.config
+	echo "CONFIG_PACKAGE_luci-i18n-clashoo-zh-cn=n" >> ./.config
+
+	# Remove any package directories that match clashoo to ensure it doesn't get pulled in
+	find ./package -maxdepth 3 -type d -iname "*clashoo*" -exec rm -rf {} + || true
+	find ./feeds -maxdepth 4 -type d -iname "*clashoo*" -exec rm -rf {} + || true
 fi
