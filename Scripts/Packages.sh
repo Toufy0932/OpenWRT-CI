@@ -130,3 +130,10 @@ UPDATE_VERSION() {
 if [ -f "$GITHUB_WORKSPACE/Scripts/PRIVATE.sh" ]; then
 	source "$GITHUB_WORKSPACE/Scripts/PRIVATE.sh"
 fi
+
+# luci-theme-design（Lede 主题，提取 + 修正 include）
+git clone --depth=1 --single-branch --branch openwrt-25.12 "https://github.com/coolsnowwolf/luci.git" ./lede-luci
+cp -rf ./lede-luci/themes/luci-theme-design ./luci-theme-design
+rm -rf ./lede-luci
+sed -i 's|include ../../luci.mk|include $(TOPDIR)/feeds/luci/luci.mk|' ./luci-theme-design/Makefile
+
