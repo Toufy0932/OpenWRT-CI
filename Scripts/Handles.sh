@@ -229,12 +229,12 @@ if [ -d "$PKG_PATH/luci-app-mini-diskmanager" ]; then
 fi
 
 #修复TailScale配置文件冲突
+# 修复TailScale配置（只修 files 双斜杠，保留 init/conf 安装）
 FEEDS_PACKAGES="$PKG_PATH/../feeds/packages"
 TS_FILE="$(find "$FEEDS_PACKAGES" -maxdepth 3 -type f -wholename '*/tailscale/Makefile' -print -quit 2>/dev/null)"
 if [ -f "$TS_FILE" ]; then
 	echo " "
-
-	if sed -i '/\/files/d' "$TS_FILE"; then
+	if sed -i 's#\./files//#./files/#g' "$TS_FILE"; then
 		echo "tailscale has been fixed!"
 	else
 		echo "tailscale fix failed; continuing!"
